@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>脳にいいアプリ - バッテリー最適化設定ガイド</title>
+    <style>
+        body {
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+        }
+        .container {
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 24px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .main-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 30px 20px;
+        }
+        .main-button {
+            display: inline-block;
+            padding: 20px 40px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            box-shadow: 0 4px 8px rgba(52, 152, 219, 0.3);
+            transition: all 0.3s ease;
+        }
+        .main-button:hover {
+            background: #2980b9;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(52, 152, 219, 0.4);
+        }
+        .manufacturer-select {
+            margin: 40px 0 30px 0;
+        }
+        .manufacturer-select label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #3498db;
+            border-radius: 8px;
+            font-size: 16px;
+            background: white;
+        }
+        .instructions {
+            display: none;
+            background: #ecf0f1;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+        .instructions.active {
+            display: block;
+        }
+        .instructions h3 {
+            color: #2c3e50;
+            margin-top: 0;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .step {
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: 6px;
+            border-left: 4px solid #3498db;
+        }
+        .step-number {
+            font-weight: bold;
+            color: #3498db;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        .app-name {
+            background: #e74c3c;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+        .settings-path {
+            background: #f39c12;
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+        .note {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            color: #856404;
+            padding: 15px;
+            border-radius: 6px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧠 脳にいいアプリ</h1>
+        <div class="subtitle">バッテリー最適化無効化ガイド</div>
+        
+        <div class="main-button-container">
+            <a href="intent:#Intent;action=android.settings.IGNORE_BATTERY_OPTIMIZATION_SETTINGS;end" class="main-button">
+                ⚙️ バッテリー最適化設定を開く
+            </a>
+        </div>
+
+        <div class="manufacturer-select">
+            <label for="manufacturer">📱 機種別の詳細設定方法:</label>
+            <select id="manufacturer" onchange="showInstructions()">
+                <option value="">-- メーカーを選択 --</option>
+                <option value="samsung">Samsung（サムスン）</option>
+                <option value="sony">Sony（ソニー）</option>
+                <option value="google">Google Pixel</option>
+                <option value="xiaomi">Xiaomi（シャオミ）</option>
+                <option value="huawei">Huawei（ファーウェイ）</option>
+                <option value="oppo">OPPO</option>
+                <option value="sharp">Sharp（シャープ）</option>
+                <option value="fujitsu">Fujitsu（富士通）</option>
+                <option value="lg">LG</option>
+                <option value="asus">ASUS</option>
+                <option value="panasonic">Panasonic</option>
+                <option value="kyocera">Kyocera（京セラ）</option>
+                <option value="motorola">Motorola（モトローラ）</option>
+                <option value="fcnt">FCNT</option>
+                <option value="zte">ZTE</option>
+                <option value="other">その他</option>
+            </select>
+        </div>
+
+        <!-- Samsung Instructions -->
+        <div id="samsung-instructions" class="instructions">
+            <h3>Samsung 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリーとデバイスケア</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="settings-path">バックグラウンドアプリの使用量制限</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="app-name">脳にいいアプリ</span> を探して <span class="settings-path">制限しない</span> を選択
+            </div>
+        </div>
+
+        <!-- Sony Instructions -->
+        <div id="sony-instructions" class="instructions">
+            <h3>Sony 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">アダプティブバッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="settings-path">制限されたアプリ</span> を確認し、<span class="app-name">脳にいいアプリ</span> が含まれていないことを確認
+            </div>
+        </div>
+
+        <!-- Google Pixel Instructions -->
+        <div id="google-instructions" class="instructions">
+            <h3>Google Pixel 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                「すべてのアプリ」に切り替え
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="app-name">脳にいいアプリ</span> をタップして <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- Xiaomi Instructions -->
+        <div id="xiaomi-instructions" class="instructions">
+            <h3>Xiaomi 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">アプリ</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">アプリを管理</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を検索して選択
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">バッテリーセーバー</span> をタップして <span class="settings-path">制限なし</span> を選択
+            </div>
+        </div>
+
+        <!-- Huawei Instructions -->
+        <div id="huawei-instructions" class="instructions">
+            <h3>Huawei 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">アプリ起動管理</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探して手動管理をオンにする
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                「自動起動」「関連起動」「バックグラウンド動作」を全てオンにする
+            </div>
+        </div>
+
+        <!-- OPPO Instructions -->
+        <div id="oppo-instructions" class="instructions">
+            <h3>OPPO 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">アプリクイック凍結</span> または <span class="settings-path">スリープスタンバイ最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探して除外リストに追加
+            </div>
+        </div>
+
+        <!-- Sharp Instructions -->
+        <div id="sharp-instructions" class="instructions">
+            <h3>Sharp 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                「すべてのアプリ」を選択
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="app-name">脳にいいアプリ</span> をタップして <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- Fujitsu Instructions -->
+        <div id="fujitsu-instructions" class="instructions">
+            <h3>Fujitsu 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- LG Instructions -->
+        <div id="lg-instructions" class="instructions">
+            <h3>LG 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー使用量の最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- ASUS Instructions -->
+        <div id="asus-instructions" class="instructions">
+            <h3>ASUS 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">パワーマスター</span> または <span class="settings-path">自動起動マネージャー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してスイッチをオンにする
+            </div>
+        </div>
+
+        <!-- Panasonic Instructions -->
+        <div id="panasonic-instructions" class="instructions">
+            <h3>Panasonic 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- Kyocera Instructions -->
+        <div id="kyocera-instructions" class="instructions">
+            <h3>Kyocera 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- Motorola Instructions -->
+        <div id="motorola-instructions" class="instructions">
+            <h3>Motorola 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- FCNT Instructions -->
+        <div id="fcnt-instructions" class="instructions">
+            <h3>FCNT 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- ZTE Instructions -->
+        <div id="zte-instructions" class="instructions">
+            <h3>ZTE 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> をタップ
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> を選択
+            </div>
+        </div>
+
+        <!-- Other Instructions -->
+        <div id="other-instructions" class="instructions">
+            <h3>その他のメーカー 設定手順</h3>
+            <div class="step">
+                <span class="step-number">1.</span>
+                <span class="settings-path">設定</span> アプリを開く
+            </div>
+            <div class="step">
+                <span class="step-number">2.</span>
+                <span class="settings-path">バッテリー</span> または <span class="settings-path">電源管理</span> を探す
+            </div>
+            <div class="step">
+                <span class="step-number">3.</span>
+                <span class="settings-path">バッテリー最適化</span> または <span class="settings-path">アプリの電源管理</span> を開く
+            </div>
+            <div class="step">
+                <span class="step-number">4.</span>
+                <span class="app-name">脳にいいアプリ</span> を探してタップ
+            </div>
+            <div class="step">
+                <span class="step-number">5.</span>
+                <span class="settings-path">最適化しない</span> または <span class="settings-path">制限なし</span> を選択
+            </div>
+        </div>
+
+        <div class="note">
+            <strong>📝 注意:</strong> メーカーやAndroidバージョンによって設定項目名が異なる場合があります。類似の項目名を探してください。設定後は、脳にいいアプリが正常に動作することをご確認ください。
+        </div>
+    </div>
+
+    <script>
+        function showInstructions() {
+            const manufacturer = document.getElementById('manufacturer').value;
+            const allInstructions = document.querySelectorAll('.instructions');
+            
+            allInstructions.forEach(instruction => {
+                instruction.classList.remove('active');
+            });
+            
+            if (manufacturer) {
+                const targetInstruction = document.getElementById(manufacturer + '-instructions');
+                if (targetInstruction) {
+                    targetInstruction.classList.add('active');
+                }
+            }
+        }
+    </script>
+</body>
+</html>
